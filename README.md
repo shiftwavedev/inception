@@ -1,0 +1,5 @@
+# inception
+
+## License
+
+[MIT](./LICENSE)
