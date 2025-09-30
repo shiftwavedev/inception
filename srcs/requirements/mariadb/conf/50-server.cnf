@@ -13,8 +13,8 @@
 #
 
 #user                    = mysql
-pid-file                = /run/mysqld/mysqld.pid
-basedir                 = /usr
+pid-file                  = /run/mysqld/mysqld.pid
+basedir                  = /usr
 #datadir                 = /var/lib/mysql
 #tmpdir                  = /tmp
 
@@ -52,7 +52,7 @@ basedir                 = /usr
 # Both location gets rotated by the cronjob.
 # Be aware that this log type is a performance killer.
 # Recommend only changing this at runtime for short testing periods if needed!
-#general_log_file       = /var/log/mysql/mysql.log
+#general_log_file        = /var/log/mysql/mysql.log
 #general_log            = 1
 
 # Error logging goes via stdout/stderr, which on systemd systems goes to
@@ -60,7 +60,7 @@ basedir                 = /usr
 # Enable this if you want to have error logging into a separate file
 #log_error = /var/log/mysql/error.log
 # Enable the slow query log to see queries with especially long duration
-#log_slow_query_file    = /var/log/mysql/mariadb-slow.log
+#log_slow_query_file     = /var/log/mysql/mariadb-slow.log
 #log_slow_query_time    = 10
 #log_slow_verbosity     = query_plan,explain
 #log-queries-not-using-indexes
