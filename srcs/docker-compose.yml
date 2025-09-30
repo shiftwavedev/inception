@@ -13,28 +13,17 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - inception
-
-  nginx:
-    depends_on:
-      - wordpress
-    build:
-      context: ./requirements/nginx
-      args:
-        LOGIN: ${LOGIN:-dekulow}
-    container_name: nginx
-    restart: always
-    environment:
-      LOGIN: ${LOGIN:-dekulow}
-    ports:
-      - "443:443"
-    volumes:
-      - wordpress_data:/var/www/html
-    networks:
-      - inception
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${SQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   wordpress:
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     build:
       context: ./requirements/wordpress
     container_name: wordpress
@@ -52,6 +41,37 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - inception
+    healthcheck:
+      test: ["CMD-SHELL", "pidof php-fpm7.4 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  nginx:
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    build:
+      context: ./requirements/nginx
+      args:
+        LOGIN: ${LOGIN:-}
+    container_name: nginx
+    restart: always
+    environment:
+      LOGIN: ${LOGIN:-}
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - inception
+    healthcheck:
+      test: ["CMD-SHELL", "curl -kf https://localhost:443 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
 volumes:
   mariadb_data:
