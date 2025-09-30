@@ -1,7 +1,7 @@
 FROM debian:bullseye-20250428@sha256:2a7f95bcf104c8410bf4d3b13c52f6e0e4334bb2edf8d80c7f9881e49447effe
 
-ARG VER_WORDPRESS
-ENV VER_WORDPRESS=${VER_WORDPRESS}
+ARG WP_VERSION
+ENV WP_VERSION=${WP_VERSION}
 
 WORKDIR /root
 
@@ -16,12 +16,12 @@ RUN apt-get update && apt-get upgrade -y && \
 	rm -rf /var/lib/apt/lists/*
 
 # Download and install wordpress data
-RUN wget --no-check-certificate https://wordpress.org/wordpress-${VER_WORDPRESS}.tar.gz -P /tmp && \
-	tar -xzf /tmp/wordpress-${VER_WORDPRESS}.tar.gz -C /tmp && \
+RUN wget --no-check-certificate https://wordpress.org/wordpress-${WP_VERSION}.tar.gz -P /tmp && \
+	tar -xzf /tmp/wordpress-${WP_VERSION}.tar.gz -C /tmp && \
 	mkdir -p /var/www/html && \
 	mv /tmp/wordpress/* /var/www/html/ && \
 	chown -R www-data:www-data /var/www/html && \
-	rm -rf /tmp/wordpress /tmp/wordpress-${VER_WORDPRESS}.tar.gz
+	rm -rf /tmp/wordpress /tmp/wordpress-${WP_VERSION}.tar.gz
 
 # Download and install exec wp-cli
 RUN wget --no-check-certificate https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
