@@ -26,6 +26,8 @@ services:
         condition: service_healthy
     build:
       context: ./requirements/wordpress
+      args:
+        VER_WORDPRESS: ${VER_WORDPRESS:-6.8.1}
     container_name: wordpress
     restart: always
     environment:
