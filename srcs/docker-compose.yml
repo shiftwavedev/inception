@@ -1,0 +1,74 @@
+services:
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+    container_name: mariadb
+    restart: always
+    environment:
+      SQL_DATABASE: ${SQL_DATABASE}
+      SQL_USER: ${SQL_USER}
+      SQL_PASSWORD: ${SQL_PASSWORD}
+      SQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - inception
+
+  nginx:
+    depends_on:
+      - wordpress
+    build:
+      context: ./requirements/nginx
+      args:
+        LOGIN: ${LOGIN:-dekulow}
+    container_name: nginx
+    restart: always
+    environment:
+      LOGIN: ${LOGIN:-dekulow}
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - inception
+
+  wordpress:
+    depends_on:
+      - mariadb
+    build:
+      context: ./requirements/wordpress
+    container_name: wordpress
+    restart: always
+    environment:
+      SQL_DATABASE: ${SQL_DATABASE}
+      SQL_USER: ${SQL_USER}
+      SQL_PASSWORD: ${SQL_PASSWORD}
+      SQL_HOST: mariadb
+      WORDPRESS_DB_NAME: ${SQL_DATABASE}
+      WORDPRESS_DB_USER: ${SQL_USER}
+      WORDPRESS_DB_PASSWORD: ${SQL_PASSWORD}
+      WORDPRESS_DB_HOST: mariadb
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - inception
+
+volumes:
+  mariadb_data:
+    name: mariadb_data
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: /home/${USER}/data/mariadb
+  wordpress_data:
+    name: wordpress_data
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: /home/${USER}/data/wordpress
+
+networks:
+  inception:
+    name: inception
