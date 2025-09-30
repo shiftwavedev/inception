@@ -8,16 +8,19 @@ WORKDIR /root
 RUN apt-get update && apt-get upgrade -y && \
 	apt-get install --no-install-recommends -y \
 	wget \
-	php7.3\
-	php-fpm\
-	php-mysql\
-	mariadb-client
+	php7.4 \
+	php7.4-fpm \
+	php7.4-mysql \
+	mariadb-client && \
+	rm -rf /var/lib/apt/lists/*
 
 # Download and install wordpress data
-RUN wget --no-check-certificate https://wordpress.org/wordpress-${VERSION_WORDPRESS}.tar.gz -P /var/www && \
-	cd /var/www/ && \
-	tar -xvzf wordpress-${VERSION_WORDPRESS}.tar.gz && \
-	chown -R root:root /var/www/wordpress
+RUN wget --no-check-certificate https://wordpress.org/wordpress-${VERSION_WORDPRESS}.tar.gz -P /tmp && \
+	tar -xzf /tmp/wordpress-${VERSION_WORDPRESS}.tar.gz -C /tmp && \
+	mkdir -p /var/www/html && \
+	mv /tmp/wordpress/* /var/www/html/ && \
+	chown -R www-data:www-data /var/www/html && \
+	rm -rf /tmp/wordpress /tmp/wordpress-${VERSION_WORDPRESS}.tar.gz
 
 # Download and install exec wp-cli
 RUN wget --no-check-certificate https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
