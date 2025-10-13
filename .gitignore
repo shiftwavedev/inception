@@ -53,3 +53,5 @@ Temporary Items
 
 ### Projects ###
 .env
+# Secrets
+secrets/*
