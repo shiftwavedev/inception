@@ -60,6 +60,7 @@ services:
         condition: service_healthy
     build:
       context: ./requirements/nginx
+      no_cache: true
       args:
         LOGIN: ${LOGIN:-}
     container_name: nginx
