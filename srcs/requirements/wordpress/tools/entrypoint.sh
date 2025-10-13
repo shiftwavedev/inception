@@ -4,6 +4,16 @@
 mkdir -p /run/php
 chown www-data:www-data /run/php
 
+# Read secrets
+SQL_PASSWORD=$(cat /run/secrets/db_password)
+
+WP_ADMIN_USER=$(sed -n '1p' /run/secrets/credentials)
+WP_ADMIN_PASSWORD=$(sed -n '2p' /run/secrets/credentials)
+WP_ADMIN_EMAIL=$(sed -n '3p' /run/secrets/credentials)
+WP_USER=$(sed -n '4p' /run/secrets/credentials)
+WP_USER_PASSWORD=$(sed -n '5p' /run/secrets/credentials)
+WP_USER_EMAIL=$(sed -n '6p' /run/secrets/credentials)
+
 # Check if WordPress is already installed
 if [ ! -f /var/www/html/wp-config.php ]; then
     echo "Configuring WordPress..."
