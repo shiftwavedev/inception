@@ -4,6 +4,11 @@
 mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 
+# Read secrets
+SQL_PASSWORD=$(cat /run/secrets/db_password)
+
+SQL_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
+
 # Check if initialization is needed
 if [ ! -d "/var/lib/mysql/${SQL_DATABASE}" ]; then
     echo "First run detected - initializing MariaDB..."
