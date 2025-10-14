@@ -74,6 +74,7 @@ make all
 Create `.env` file from template:
 
 ```bash
+cd srcs/
 cp .env.example .env
 ```
 
