@@ -45,7 +45,7 @@ cp .env.example .env
 # Edit .env and configure:
 # - LOGIN=<login42>
 # - WP_TITLE=Inception
-# - WP_URL=https://<login42>.42paris.fr
+# - WP_URL=https://<login42>.42.fr
 # ...
 ```
 
@@ -55,7 +55,7 @@ cp .env.example .env
 make all
 ```
 
-**Access:** `https://<login42>.42paris.fr` _(self-signed cert warning is normal)_
+**Access:** `https://<login42>.42.fr` _(self-signed cert warning is normal)_
 
 ## Commands
 
@@ -83,7 +83,7 @@ Edit the following values:
 SQL_DATABASE=wordpress                  # Database name
 SQL_USER=wpuser                         # Database user
 WP_TITLE=My WordPress Site              # Site title
-WP_URL=https://<login42>.42paris.fr     # Site URL
+WP_URL=https://<login42>.42.fr     # Site URL
 WP_VERSION=6.8.1                        # WordPress version (optional)
 LOGIN=<login42>                         # Your login42
 ```
@@ -130,10 +130,10 @@ tr -dc 'A-Za-z0-9!@#$%^&*' < /dev/urandom | head -c 32
 
 ```bash
 # WordPress frontend
-https://<login42>.42paris.fr
+https://<login42>.42.fr
 
 # WordPress admin dashboard
-https://<login42>.42paris.fr/wp-admin
+https://<login42>.42.fr/wp-admin
 ```
 
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Substitute environment variables in nginx config
-echo "Configuring nginx for ${LOGIN}.42paris.fr..."
+echo "Configuring nginx for ${LOGIN}.42.fr..."
 envsubst '${LOGIN}' < /etc/nginx/sites-available/default > /tmp/default
 mv /tmp/default /etc/nginx/sites-available/default
 
