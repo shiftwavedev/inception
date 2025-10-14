@@ -60,6 +60,42 @@ EOF
     echo "WARNING: Update the secret files in $SECRETS_DIR before deployment!"
 fi
 
+# Configure /etc/hosts for domain resolution
+echo "==> Configuring domain resolution..."
+SRCS_ENV="$(dirname "$0")/srcs/.env"
+if [[ -f "$SRCS_ENV" ]]; then
+    # Extract LOGIN from .env file
+    LOGIN=$(grep -E "^LOGIN=" "$SRCS_ENV" | cut -d'=' -f2)
+    if [[ -n "$LOGIN" ]]; then
+        DOMAIN="${LOGIN}.42.fr"
+
+        # Check if entry already exists
+        if grep -q "$DOMAIN" /etc/hosts; then
+            echo "Domain $DOMAIN already configured in /etc/hosts"
+        else
+            echo "127.0.0.1    $DOMAIN" >> /etc/hosts
+            echo "Added $DOMAIN to /etc/hosts"
+        fi
+    else
+        echo "WARNING: LOGIN not found in $SRCS_ENV"
+        echo "You will need to manually add your domain to /etc/hosts:"
+        echo "  sudo sh -c 'echo \"127.0.0.1    <your_login>.42.fr\" >> /etc/hosts'"
+    fi
+else
+    echo "WARNING: .env file not found at $SRCS_ENV"
+    echo "You will need to manually add your domain to /etc/hosts:"
+    echo "  sudo sh -c 'echo \"127.0.0.1    <your_login>.42.fr\" >> /etc/hosts'"
+fi
+
+# Create data directories
+echo "==> Creating data directories..."
+DATA_DIR="/home/${SUDO_USER:-$USER}/data"
+mkdir -p "$DATA_DIR/mariadb" "$DATA_DIR/wordpress"
+if [[ -n "$SUDO_USER" ]]; then
+    chown -R "$SUDO_USER:$SUDO_USER" "$DATA_DIR"
+fi
+echo "Data directories created at: $DATA_DIR"
+
 # Verification
 echo ""
 echo "==> Verifying installation..."
@@ -74,4 +110,5 @@ echo ""
 echo "Next steps:"
 echo "  1. Log out and back in"
 echo "  2. Update secrets in: $SECRETS_DIR"
-echo "  3. Run: cd srcs && docker compose up -d"
+echo "  3. Verify domain in /etc/hosts: $(grep -E "\.42\.fr" /etc/hosts 2>/dev/null || echo 'Not configured')"
+echo "  4. Run: make all"

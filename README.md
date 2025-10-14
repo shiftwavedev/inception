@@ -21,15 +21,19 @@ Generate strong passwords and create secrets:
 # Create secrets directory
 mkdir -p secrets
 
-# Generate random passwords (macOS/Linux)
+# Generate random passwords
 openssl rand -base64 32 > secrets/db_password.txt
 openssl rand -base64 32 > secrets/db_root_password.txt
-echo "admin:$(openssl rand -base64 24)" > secrets/credentials.txt
 
-# Or manually set passwords
-echo "your_strong_password" > secrets/db_password.txt
-echo "your_root_password" > secrets/db_root_password.txt
-echo "admin:your_wp_password" > secrets/credentials.txt
+# Create credentials file (6 lines format)
+cat > secrets/credentials.txt << 'EOF'
+wpowner
+admin_password_secure_123
+wpowner@inception.42.fr
+wpuser
+user_password_secure_456
+user@inception.42.fr
+EOF
 ```
 
 ### 2. Configure Environment
@@ -92,9 +96,19 @@ LOGIN=<login42>                         # Your login42
 |------|---------|---------|
 | `db_password.txt` | Database user password | `xK9mP2vQ8nL5...` |
 | `db_root_password.txt` | Database root password | `7Rj4wT1sN9hM...` |
-| `credentials.txt` | WordPress admin credentials | `admin:Wp@dmin123` |
+| `credentials.txt` | WordPress users (admin/user) | See format below |
 
-**Format for credentials.txt:** `username:password`
+**Format for credentials.txt:**
+```
+admin_username
+admin_password
+admin_email@example.com
+user_username
+user_password
+user_email@example.com
+```
+
+**Note:** Admin username must NOT contain 'admin', 'Admin', 'administrator', or 'Administrator' (ex use 'wpowner', 'siteadmin', 'manager', etc.)
 
 ### Password Generator
 
