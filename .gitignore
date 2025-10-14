@@ -53,5 +53,6 @@ Temporary Items
 
 ### Projects ###
 .env
-# Secrets
+# Secrets (ignore all files except .gitkeep)
 secrets/*
+!secrets/.gitkeep
