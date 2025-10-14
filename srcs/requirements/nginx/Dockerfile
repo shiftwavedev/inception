@@ -13,7 +13,7 @@ RUN apt-get update && \
 RUN openssl req -nodes -new -x509 \
 	-keyout selfsigned.key \
 	-out selfsigned.crt \
-	-subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=${LOGIN}.42paris.fr"
+	-subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=${LOGIN}.42.fr"
 
 # Stage 2: Final nginx image (without OpenSSL)
 FROM debian:bullseye-20250428@sha256:2a7f95bcf104c8410bf4d3b13c52f6e0e4334bb2edf8d80c7f9881e49447effe
