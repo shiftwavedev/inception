@@ -1,4 +1,4 @@
-FROM debian:bullseye-20250428@sha256:2a7f95bcf104c8410bf4d3b13c52f6e0e4334bb2edf8d80c7f9881e49447effe
+FROM debian:bookworm
 
 ARG WP_VERSION
 ENV WP_VERSION=${WP_VERSION}
@@ -8,9 +8,9 @@ WORKDIR /root
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install --no-install-recommends -y \
     wget \
-    php7.4 \
-    php7.4-fpm \
-    php7.4-mysql \
+    php8.2 \
+    php8.2-fpm \
+    php8.2-mysql \
     mariadb-client && \
     rm -rf /var/lib/apt/lists/*
 
@@ -25,7 +25,7 @@ RUN wget --no-check-certificate https://raw.githubusercontent.com/wp-cli/builds/
     mv ./wp-cli.phar /usr/local/bin/wp-cli && \
     chmod +x /usr/local/bin/wp-cli
 
-COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 COPY ./tools/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
