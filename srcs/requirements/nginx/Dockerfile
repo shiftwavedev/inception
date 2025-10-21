@@ -1,4 +1,4 @@
-FROM debian:bullseye-20250428@sha256:2a7f95bcf104c8410bf4d3b13c52f6e0e4334bb2edf8d80c7f9881e49447effe AS cert-builder
+FROM debian:bookworm AS cert-builder
 
 ARG LOGIN
 ENV LOGIN=${LOGIN}
@@ -14,7 +14,7 @@ RUN openssl req -nodes -new -x509 \
     -out selfsigned.crt \
     -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=${LOGIN}.42.fr"
 
-FROM debian:bullseye-20250428@sha256:2a7f95bcf104c8410bf4d3b13c52f6e0e4334bb2edf8d80c7f9881e49447effe
+FROM debian:bookworm
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
