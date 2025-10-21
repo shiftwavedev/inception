@@ -5,28 +5,25 @@ ENV WP_VERSION=${WP_VERSION}
 
 WORKDIR /root
 
-# Install PHP && MariaDB-Client
 RUN apt-get update && apt-get upgrade -y && \
-	apt-get install --no-install-recommends -y \
-	wget \
-	php7.4 \
-	php7.4-fpm \
-	php7.4-mysql \
-	mariadb-client && \
-	rm -rf /var/lib/apt/lists/*
+    apt-get install --no-install-recommends -y \
+    wget \
+    php7.4 \
+    php7.4-fpm \
+    php7.4-mysql \
+    mariadb-client && \
+    rm -rf /var/lib/apt/lists/*
 
-# Download and install wordpress data
 RUN wget --no-check-certificate https://wordpress.org/wordpress-${WP_VERSION}.tar.gz -P /tmp && \
-	tar -xzf /tmp/wordpress-${WP_VERSION}.tar.gz -C /tmp && \
-	mkdir -p /var/www/html && \
-	mv /tmp/wordpress/* /var/www/html/ && \
-	chown -R www-data:www-data /var/www/html && \
-	rm -rf /tmp/wordpress /tmp/wordpress-${WP_VERSION}.tar.gz
+    tar -xzf /tmp/wordpress-${WP_VERSION}.tar.gz -C /tmp && \
+    mkdir -p /var/www/html && \
+    mv /tmp/wordpress/* /var/www/html/ && \
+    chown -R www-data:www-data /var/www/html && \
+    rm -rf /tmp/wordpress /tmp/wordpress-${WP_VERSION}.tar.gz
 
-# Download and install exec wp-cli
 RUN wget --no-check-certificate https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
-	mv ./wp-cli.phar /usr/local/bin/wp-cli && \
-	chmod +x /usr/local/bin/wp-cli
+    mv ./wp-cli.phar /usr/local/bin/wp-cli && \
+    chmod +x /usr/local/bin/wp-cli
 
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 

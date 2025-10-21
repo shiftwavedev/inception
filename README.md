@@ -84,7 +84,7 @@ Edit the following values:
 SQL_DATABASE=wordpress                  # Database name
 SQL_USER=wpuser                         # Database user
 WP_TITLE=My WordPress Site              # Site title
-WP_URL=https://<login42>.42.fr     # Site URL
+WP_URL=https://<login42>.42.fr          # Site URL
 WP_VERSION=6.8.1                        # WordPress version (optional)
 LOGIN=<login42>                         # Your login42
 ```
@@ -140,7 +140,7 @@ https://<login42>.42.fr/wp-admin
 
 ## License
 
-This project is licensed under the [MIT License](./LICENSE) - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the [MIT License](./LICENSE) see the [LICENSE](./LICENSE) file for details.
 
 ---
 
