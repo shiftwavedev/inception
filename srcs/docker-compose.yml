@@ -84,18 +84,18 @@ services:
 volumes:
   mariadb_data:
     name: mariadb_data
-    # driver: local
-    # driver_opts:
-    #   type: none
-    #   o: bind
-    #   device: /home/${LOGIN}/data/mariadb
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${LOGIN}/data/mariadb
   wordpress_data:
     name: wordpress_data
-    # driver: local
-    # driver_opts:
-    #   type: none
-    #   o: bind
-    #   device: /home/${LOGIN}/data/wordpress
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${LOGIN}/data/wordpress
 
 networks:
   inception:

@@ -18,9 +18,6 @@ cd inception
 Generate strong passwords and create secrets:
 
 ```bash
-# Create secrets directory
-mkdir -p secrets
-
 # Generate random passwords
 openssl rand -base64 32 > secrets/db_password.txt
 openssl rand -base64 32 > secrets/db_root_password.txt
@@ -81,12 +78,12 @@ cp .env.example .env
 Edit the following values:
 
 ```bash
+LOGIN=<login42>                         # Your login42
 SQL_DATABASE=wordpress                  # Database name
 SQL_USER=wpuser                         # Database user
 WP_TITLE=My WordPress Site              # Site title
 WP_URL=https://<login42>.42.fr          # Site URL
 WP_VERSION=6.8.1                        # WordPress version (optional)
-LOGIN=<login42>                         # Your login42
 ```
 
 ### Secrets Files
