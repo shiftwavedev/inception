@@ -36,6 +36,9 @@ EOF
 ### 2. Configure Environment
 
 ```bash
+# Go to srcs/
+cd srcs/
+
 # Copy example environment file
 cp .env.example .env
 
@@ -49,6 +52,10 @@ cp .env.example .env
 ### 3. Launch
 
 ```bash
+# Go to root of project
+cd ..
+
+# Launch stack !
 make all
 ```
 
