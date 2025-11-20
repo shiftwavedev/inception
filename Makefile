@@ -1,7 +1,13 @@
 DOCKER_COMPOSE = docker compose -f srcs/docker-compose.yml
 
-all:
+all: setup-volumes
 	$(DOCKER_COMPOSE) up -d --build
+
+setup-volumes:
+	@echo "Creating volume directories..."
+	@mkdir -p $$(grep '^LOGIN=' srcs/.env | cut -d'=' -f2 | xargs -I {} echo /home/{}/data/mariadb)
+	@mkdir -p $$(grep '^LOGIN=' srcs/.env | cut -d'=' -f2 | xargs -I {} echo /home/{}/data/wordpress)
+	@echo "[INFO] Volume directories ready"
 
 re: fclean all
 
@@ -65,6 +71,6 @@ health:
 stats:
 	docker stats --no-stream
 
-.PHONY: all clean fclean re up down stop start restart logs ps build pull \
+.PHONY: all clean fclean re setup-volumes up down stop start restart logs ps build pull \
         exec-nginx exec-wordpress exec-mariadb validate prune-volumes \
         prune-images health stats
