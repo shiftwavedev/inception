@@ -13,6 +13,9 @@ re: fclean all
 
 clean:
 	$(DOCKER_COMPOSE) down -v
+	@echo "Removing volume directories..."
+	@rm -rf $$(grep '^LOGIN=' srcs/.env | cut -d'=' -f2 | xargs -I {} echo /home/{}/data)
+	@echo "[INFO] Volume directories removed"
 
 fclean: clean
 	docker system prune --all
